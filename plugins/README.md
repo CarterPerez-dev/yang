@@ -1,106 +1,53 @@
-# IDE Plugins
+# Editor and git integration
 
-## Emacs
+## Any editor
 
-The `Emacs` plugin is maintained separately. Installation directions can be
-found here: https://github.com/paetzke/py-yapf.el
-
+yang is a drop-in replacement for the `yapf` command line. Any editor
+integration that runs `yapf` (py-yapf.el for Emacs, PyYapf for Sublime Text,
+VS Code formatter extensions, and so on) can run yang instead: point the
+integration's executable setting at `yang`. Command line flags are identical.
 
 ## Vim
 
-The `vim` plugin allows you to reformat a range of code. Copy `plugin` and
-`autoload` directories into your `~/.vim` or use `:packadd` in Vim 8. Or use
-a plugin manager like Plug or Vundle:
+The `vim` plugin reformats a range of code. Copy the `plugin` and `autoload`
+directories into your `~/.vim`, use `:packadd`, or use a plugin manager:
 
 ```vim
 " Plug
-Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
-
-" Vundle
-Plugin 'google/yapf', { 'rtp': 'plugins/vim' }
+Plug 'CarterPerez-dev/yang', { 'rtp': 'plugins/vim', 'for': 'python' }
 ```
 
-You can add key bindings in the `.vimrc` file:
+Key bindings for `.vimrc`:
 
 ```vim
-map <C-Y> :call yapf#YAPF()<cr>
-imap <C-Y> <c-o>:call yapf#YAPF()<cr>
+map <C-Y> :call yang#Yang()<cr>
+imap <C-Y> <c-o>:call yang#Yang()<cr>
 ```
 
-Alternatively, you can call the command `YAPF`. If you omit the range, it will
-reformat the whole buffer.
-
-example:
+Or call the `Yang` command. Without a range it formats the whole buffer:
 
 ```vim
-:YAPF       " formats whole buffer
-:'<,'>YAPF  " formats lines selected in visual mode
+:Yang       " formats whole buffer
+:'<,'>Yang  " formats lines selected in visual mode
 ```
 
+## pre-commit
 
-## Sublime Text
+```yaml
+repos:
+  - repo: https://github.com/CarterPerez-dev/yang
+    rev: v1.0.0
+    hooks:
+      - id: yang
+```
 
-The `Sublime Text` plugin is also maintained separately. It is compatible with
-both Sublime Text 2 and 3.
+## Plain git pre-commit hook
 
-The plugin can be easily installed by using *Sublime Package Control*. Check
-the project page of the plugin for more information: https://github.com/jason-kane/PyYapf
-
-
-## git Pre-Commit Hook
-
-The `git` pre-commit hook automatically formats your Python files before they
-are committed to your local repository. Any changes `yapf` makes to the files
-will stay unstaged so that you can diff them manually.
-
-To install, simply download the raw file and copy it into your git hooks
-directory:
+`plugins/pre-commit.sh` formats staged Python files before they are committed.
+Changes it makes stay unstaged so you can review them:
 
 ```bash
-# From the root of your git project.
-$ curl -o pre-commit.sh https://raw.githubusercontent.com/google/yapf/main/plugins/pre-commit.sh
-$ chmod a+x pre-commit.sh
-$ mv pre-commit.sh .git/hooks/pre-commit
+curl -o pre-commit.sh https://raw.githubusercontent.com/CarterPerez-dev/yang/main/plugins/pre-commit.sh
+chmod a+x pre-commit.sh
+mv pre-commit.sh .git/hooks/pre-commit
 ```
-
-
-## Textmate 2
-
-Plugin for `Textmate 2` requires `yapf` Python package installed on your
-system:
-
-```bash
-$ pip install yapf
-```
-
-Also, you will need to activate `Python` bundle from `Preferences > Bundles`.
-
-Finally, create a `~/Library/Application Support/TextMate/Bundles/Python.tmbundle/Commands/YAPF.tmCommand`
-file with the following content:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-  <key>beforeRunningCommand</key>
-  <string>saveActiveFile</string>
-  <key>command</key>
-  <string>#!/bin/bash
-
-TPY=${TM_PYTHON:-python}
-
-"$TPY" "/usr/local/bin/yapf" "$TM_FILEPATH"</string>
-  <key>input</key>
-  <string>document</string>
-  <key>name</key>
-  <string>YAPF</string>
-  <key>scope</key>
-  <string>source.python</string>
-  <key>uuid</key>
-  <string>297D5A82-2616-4950-9905-BD2D1C94D2D4</string>
-</dict>
-</plist>
-```
-
-You will see a new menu item `Bundles > Python > YAPF`.

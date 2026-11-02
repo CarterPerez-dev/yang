@@ -1,0 +1,25 @@
+yang
+©AngelaMos | 2026
+
+yang is a modified version of YAPF (https://github.com/google/yapf).
+
+YAPF is Copyright 2015-2025 Google Inc. and the YAPF authors listed in the
+AUTHORS and CONTRIBUTORS files, and is licensed under the Apache License,
+Version 2.0. A copy of the license is in the LICENSE file.
+
+Modifications Copyright 2026 AngelaMos, also licensed under the Apache
+License, Version 2.0. The modifications are:
+  - the package, command line tools, configuration files and pragmas were
+    renamed from yapf to yang;
+  - the tokenizer, grammar and formatter were extended to support all Python
+    syntax up to Python 3.14 (PEP 646, 654, 695, 696, 701, 750 and 758);
+  - a number of formatting bugs were fixed.
+Every source file that differs from YAPF carries a notice line saying so.
+
+This product includes a modified copy of lib2to3 from the Python standard
+library, Copyright 2001-2006 Python Software Foundation, licensed under the
+Python Software Foundation License (third_party/yang_third_party/_ylib2to3/LICENSE).
+
+This product includes yang-diff, a modified copy of yapf-diff, which is
+derived from clang-format-diff.py of the LLVM project
+(third_party/yang_third_party/yang_diff/LICENSE).

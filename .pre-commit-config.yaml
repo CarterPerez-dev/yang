@@ -1,5 +1,6 @@
 # File introduces automated checks triggered on git events
-# to enable run `pip install pre-commit && pre-commit install`
+# Modifications ©AngelaMos | 2026 for the yang fork of yapf.
+# to enable run `uv tool install pre-commit && pre-commit install`
 
 repos:
   - repo: https://github.com/pycqa/isort
@@ -9,10 +10,10 @@ repos:
         name: isort (python)
   - repo: local
     hooks:
-      - id: yapf
-        name: yapf
+      - id: yang
+        name: yang
         language: python
-        entry: yapf
+        entry: yang
         args: [-i]
         types: [python]
   - repo: https://github.com/pycqa/flake8

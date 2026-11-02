@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
+# Modifications ©AngelaMos | 2026 for the yang fork of yapf.
 
 # Git pre-commit hook to check staged Python files for formatting issues with
-# yapf.
+# yang.
 #
 # INSTALLING: Copy this script into `.git/hooks/pre-commit`, and mark it as
 # executable.
 #
-# This requires that yapf is installed and runnable in the environment running
+# This requires that yang is installed and runnable in the environment running
 # the pre-commit hook.
 #
 # When running, this first checks for unstaged changes to staged files, and if
 # there are any, it will exit with an error. Files with unstaged changes will be
 # printed.
 #
-# If all staged files have no unstaged changes, it will run yapf against them,
+# If all staged files have no unstaged changes, it will run yang against them,
 # leaving the formatting changes unstaged. Changed files will be printed.
 #
 # BUGS: This does not leave staged changes alone when used with the -a flag to
@@ -28,22 +29,11 @@ if [ ${#PYTHON_FILES[@]} -eq 0 ]; then
   exit 0
 fi
 
-########## PIP VERSION #############
-# Verify that yapf is installed; if not, warn and exit.
-if ! command -v yapf >/dev/null; then
-  echo 'yapf not on path; can not format. Please install yapf:'
-  echo '    pip install yapf'
+if ! command -v yang >/dev/null; then
+  echo 'yang not on path; can not format. Please install yang:'
+  echo '    uv tool install git+https://github.com/CarterPerez-dev/yang'
   exit 2
 fi
-######### END PIP VERSION ##########
-
-########## PIPENV VERSION ##########
-# if ! pipenv run yapf --version 2>/dev/null 2>&1; then
-#   echo 'yapf not on path; can not format. Please install yapf:'
-#   echo '    pipenv install yapf'
-#   exit 2
-# fi
-###### END PIPENV VERSION ##########
 
 
 # Check for unstaged changes to files in the index.
@@ -62,13 +52,7 @@ fi
 # changes.
 echo 'Formatting staged Python files . . .'
 
-########## PIP VERSION #############
-yapf -i -r "${PYTHON_FILES[@]}"
-######### END PIP VERSION ##########
-
-########## PIPENV VERSION ##########
-# pipenv run yapf -i -r "${PYTHON_FILES[@]}"
-###### END PIPENV VERSION ##########
+yang -i -r "${PYTHON_FILES[@]}"
 
 
 CHANGED_FILES=()

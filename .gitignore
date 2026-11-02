@@ -32,7 +32,7 @@
 /build
 /dist
 /.tox
-/yapf.egg-info
+/*.egg-info
 
 # IDEs
 /.idea

@@ -1,18 +1,19 @@
+# Modifications ©AngelaMos | 2026 for the yang fork of yapf.
 [build-system]
 requires = ["setuptools>=58.5.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "yapf"
-description = "A formatter for Python code"
-authors = [{ name = "Google Inc." }]
-maintainers = [{ name = "Bill Wendling", email = "morbo@google.com" }]
+name = "yang-fmt"
+description = "A maintained fork of YAPF that formats Python 3.14 code"
+authors = [{ name = "Google Inc." }, { name = "AngelaMos" }]
+maintainers = [{ name = "Carter Perez" }]
 dynamic = ["version"]
 license = { file = "LICENSE" }
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
-    'Development Status :: 4 - Beta',
+    'Development Status :: 5 - Production/Stable',
     'Environment :: Console',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: Apache Software License',
@@ -24,39 +25,42 @@ classifiers = [
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3.13',
+    'Programming Language :: Python :: 3.14',
     'Topic :: Software Development :: Libraries :: Python Modules',
     'Topic :: Software Development :: Quality Assurance',
 ]
 dependencies = ['platformdirs>=3.5.1', 'tomli>=2.0.1; python_version<"3.11"']
 
 [project.scripts]
-yapf = "yapf:run_main"
-yapf-diff = "yapf_third_party.yapf_diff.yapf_diff:main"
+yang = "yang:run_main"
+yang-diff = "yang_third_party.yang_diff.yang_diff:main"
 
 [project.urls]
-# https://daniel.feldroy.com/posts/2023-08-pypi-project-urls-cheatsheet
-Home = 'https://github.com/google/yapf'
-Changelog = 'https://github.com/google/yapf/blob/main/CHANGELOG.md'
-Docs = 'https://github.com/google/yapf/blob/main/README.md#yapf'
-Issues = 'https://github.com/google/yapf/issues'
+Home = 'https://github.com/CarterPerez-dev/yang'
+Changelog = 'https://github.com/CarterPerez-dev/yang/blob/main/CHANGELOG.md'
+Docs = 'https://github.com/CarterPerez-dev/yang/blob/main/README.md'
+Issues = 'https://github.com/CarterPerez-dev/yang/issues'
+Upstream = 'https://github.com/google/yapf'
 
 [tool.distutils.bdist_wheel]
 python_tag = "py3"
 
 [tool.setuptools]
 include-package-data = true
-package-dir = { yapf_third_party = 'third_party/yapf_third_party' }
+package-dir = { yang_third_party = 'third_party/yang_third_party' }
 
 [tool.setuptools.dynamic]
-version = { attr = "yapf._version.__version__" }
+version = { attr = "yang._version.__version__" }
 
 [tool.setuptools.packages.find]
 where = [".", 'third_party']
-include = ["yapf*", 'yapftests*']
+include = ["yang*", 'yangtests*']
 
 [tool.setuptools.package-data]
-yapf_third_party = [
-    'yapf_diff/LICENSE',
+yang_third_party = [
+    'yang_diff/LICENSE',
     '_ylib2to3/Grammar.txt',
     '_ylib2to3/PatternGrammar.txt',
     '_ylib2to3/LICENSE',

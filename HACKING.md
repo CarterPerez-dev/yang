@@ -1,75 +1,28 @@
-## Running YAPF on itself
+# Hacking on yang
 
-- To run YAPF on all of YAPF:
-
-```bash
-$ pipx run --spec=${PWD} --no-cache yapf -m -i -r yapf/ yapftests/ third_party/
-```
-
-- To run YAPF on just the files changed in the current git branch:
+## Run the tests
 
 ```bash
-$ pipx run --spec=${PWD} --no-cache yapf -m -i $(git diff --name-only @{upstream})
+uv run --python 3.14 --with . --with pytest python -m pytest -q yangtests
 ```
 
-## Testing and building redistributables locally
+The suite is expected to pass on every Python from 3.7 to 3.14.
 
-YAPF uses tox 3 to test against multiple python versions and to build redistributables.
-
-Tox will opportunistically use pyenv environments when available.
-To configure pyenv run the following in bash:
+## Format yang with itself
 
 ```bash
-$ xargs -t -n1 pyenv install  < .python-version
+uv run --with . yang -i -r yang yangtests third_party
 ```
 
-Test against all supported Python versions that are currently installed:
-```bash
-$ pipx run --spec='tox<4' tox
-```
+## Golden tests for new syntax
 
-Build and test the sdist and wheel against your default Python environment. The redistributables will be in the `dist` directory.
-```bash
-$ pipx run --spec='tox<4' tox -e bdist_wheel -e sdist
-```
+`yangtests/testdata/modern_syntax/*.in` are inputs and
+`*.{pep8,google,facebook,custom}.out` the expected output under each style.
+After an intended formatting change, regenerate the `.out` files with
+`yang` and review every diff before committing it.
 
-## Releasing a new version
+## Release
 
-1. Install all expected pyenv environements
-    ```bash
-    $ xargs -t -n1 pyenv install  < .python-version
-    ```
-
-1. Run tests against Python 3.7 - 3.11 with
-    ```bash
-    $ pipx run --spec='tox<4' tox
-    ```
-
-1. Bump version in `yapf/_version.py`.
-
-1. Build and test redistributables
-
-    ```bash
-    $ pipx run --spec='tox<4' tox -e bdist_wheel -e sdist
-    ```
-
-1. Check that it looks OK.
-   1. Install it onto a virtualenv,
-   1. run tests, and
-   1. run yapf as a tool.
-
-1. Push to PyPI:
-
-    ```bash
-    $ pipx run twine upload dist/*
-    ```
-
-1. Test in a clean virtualenv that 'pip install yapf' works with the new
-  version.
-
-1. Commit the version bump and add tag with:
-
-    ```bash
-    $ git tag v$(VERSION_NUM)
-    $ git push --tags
-    ```
+1. Bump `yang/_version.py`.
+2. Add the release to `CHANGELOG.md`.
+3. Tag `vX.Y.Z` and push the tag.

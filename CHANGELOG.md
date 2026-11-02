@@ -2,7 +2,21 @@
 # All notable changes to this project will be documented in this file.
 # This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.0] 2026-11-02 (yang)
+First release of yang, a fork of YAPF 0.43.0.
+### Changed
+- Renamed from yapf to yang: the `yang` and `yang-diff` commands, the `yang`
+  package, `.style.yang`, `[yang]` in `setup.cfg`, `[tool.yang]` in
+  `pyproject.toml`, `.yangignore`, `[tool.yangignore]`, `~/.config/yang/style`
+  and the `yang` predefined style. `# yang: disable` / `# yang: enable` are the
+  new pragmas; `# yapf: disable` / `# yapf: enable` and `based_on_style = yapf`
+  are still accepted.
+- Distributed as `yang-fmt`.
+### Added and Fixed
+- Everything listed under 0.44.0 below.
+
 ## (0.44.0) UNRELEASED
+Changes made to YAPF that were also proposed upstream.
 ### Added
 - Format all Python 3.11 through 3.14 syntax, regardless of the Python version
   YAPF runs on:
